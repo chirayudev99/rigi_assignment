@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useReducer } from "react";
+"use client"
+
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 
 const initialState = {
   video_details: {
@@ -22,7 +24,7 @@ const initialState = {
         "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       ],
       subtitle: "By Blender Foundation",
-      seek:0,
+      seek:5,
       thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg",
       title: "Big Buck Bunny",
     },
@@ -178,7 +180,9 @@ const initialState = {
       thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/WhatCarCanYouGetForAGrand.jpg",
       title: "What care can you get for a grand?",
     },
-  ]
+  ],
+  playVideo:false,
+  loading:true,
 };
 
 const PlayerContext = createContext(null);
@@ -200,6 +204,12 @@ function PlayerReducer(state, action) {
   if (action.type === "UPDATE_PLAYLIST_STATE") {
     return { ...state, playlist_state: action.payload };
   }
+  if (action.type === "PLAY_VIDEO") {
+    return { ...state, playVideo: action.payload };
+  }
+  if (action.type === "LOADING") {
+    return { ...state, loading: action.payload };
+  }
   if (action.type === "UPDATE_TIME") { 
     const { id, value } = action.payload;
     const updatedPlaylist = state.playlist_state.map((item, i) => {
@@ -208,18 +218,29 @@ function PlayerReducer(state, action) {
       }
       return item;
     });
-    return { ...state, playlist_state: updatedPlaylist };
+    return { ...state, playlist_state: updatedPlaylist,playVideo:true };
     
   }
   return state;
 }
 
 function PlayerContextProvider({ children }) {
-  const [playerState, dispatch] = useReducer(PlayerReducer, initialState);
+  let storedState;
+  if(typeof window !== "undefined"){
+     storedState = localStorage.getItem('playerContextState') ;
+  }
+  const state = storedState ? JSON.parse(storedState) : initialState
+  const [playerState, dispatch] = useReducer(PlayerReducer, state);
+
+  useEffect(() => {
+    localStorage.setItem('playerContextState', JSON.stringify(playerState));
+  }, [playerState]);
 
   const ctx = {
     video_details: playerState.video_details,
     playlist_state: playerState.playlist_state,
+    playVideo:playerState.playVideo,
+    loading:playerState.loading,
     updateVdoDetails(vdoData) {
       dispatch({ type: "UPDATE_VDO_DETAILS", payload: vdoData });
     },
@@ -228,6 +249,12 @@ function PlayerContextProvider({ children }) {
     },
     updateTime(id,value) {
       dispatch({ type: "UPDATE_TIME",payload:{id,value} });
+    },
+    setPlayVideo(value) {
+      dispatch({ type: "PLAY_VIDEO",payload:value});
+    },
+    setLoading(value) {
+      dispatch({ type: "LOADING",payload:value});
     },
   };
 

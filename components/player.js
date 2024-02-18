@@ -4,35 +4,39 @@ import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef,
 import { usePlayerContext } from "@/app/store";
 import ReactPlayer from "react-player";
 
-function Player(props){
-  const { video_details } = usePlayerContext();
+const Player = forwardRef(function Player(props,ref){
+  // const { video_details ,updateVdoDetails,playlist_state,setLoading} = usePlayerContext();
+  const { video_details ,updateVdoDetails,playlist_state,setLoading,loading} = usePlayerContext();
 
   console.log(video_details,"video_details");
 const vdoRef = useRef(null)
 const [isAutoPlay, setIsAutoPlay] = useState(false)
 
-
 const onReady = useCallback(() => {
-  const timeToStart = 7;
-  vdoRef.current.seekTo(timeToStart, 'seconds');
-  setIsAutoPlay(true)
-}, [vdoRef.current]);
-
-// useEffect(() => {
-
-// vdoRef.current.seekTo(5,"seconds")
- 
-// }, [video_details.seek])
+  props.playerReady()
+  setLoading(false)
+  if(!isAutoPlay){
+    vdoRef.current.seekTo(parseFloat(video_details.seek), 'seconds');
+    setIsAutoPlay(true)
+  }
+}, [vdoRef.current,video_details.seek]);
 
 
-// useImperativeHandle(ref, () => {
-//   return {
-//     getCurrentTime() {
-//      return vdoRef.current.getCurrentTime();
-//     },
-//   };
-// }, []);
+useImperativeHandle(ref, () => {
+  return {
+    getCurrentTime() {
+     return vdoRef.current.getCurrentTime();
+    },
+  };
+}, []);
 
+
+function onEnded(params) {
+  console.log("ended");
+  updateVdoDetails(playlist_state[video_details.id])
+  window.location.reload()
+
+}
 
 
   return (
@@ -40,13 +44,13 @@ const onReady = useCallback(() => {
 
       <ReactPlayer
       config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-      pip={false}
       {...props}
         ref={vdoRef} 
         onReady={onReady}
+        fallback={<h1> {loading && "Loading..."}</h1>}
         playing={isAutoPlay}
-        muted
-        
+        onEnded={onEnded}
+        muted      
         width="100%"
         height="auto"
         controls
@@ -55,11 +59,11 @@ const onReady = useCallback(() => {
 
       <div className="details">
         <h2>{video_details?.title}</h2>
-        <p>{video_details.description}</p>
+        <p>{video_details?.description}</p>
       </div>
     </Wrapper>
   );
-}
+})
 
 const Wrapper = styled.section`
   width: 65%;
