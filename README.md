@@ -18,7 +18,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deployed Version
 
-And here's the deployed version: https://rigi-assignment-beige.vercel.app
+And here's the deployed version: https://rigi-assignment-player.vercel.app
 
 ## Feature the app provides
  -Implement a video player with essential functionalities:
