@@ -55,6 +55,6 @@ And here's the deployed version: https://rigi-assignment-player.vercel.app
  -Best Practices: 100
  -SEO: 100
  
- ![lighthouse result img](https://ibb.co/QH8W7gF)
+ ![lighthouse result img](https://i.postimg.cc/VLbDJH66/Screenshot-2024-02-18-184246.png)
 
 Thanks
