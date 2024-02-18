@@ -47,4 +47,13 @@ And here's the deployed version: https://rigi-assignment-beige.vercel.app
  -page.js : Calling Home component and context provider to provide context
  -store.js : Code for react context (store management) and exporting relevant modules
 
+ ## Lighthouse Score
+
+ -Performance: 93
+ -Accessbility: 97
+ -Best Practices: 100
+ -SEO: 100
+ 
+ ![alt text](https://ibb.co/QH8W7gF)
+
 Thanks
