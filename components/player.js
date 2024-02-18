@@ -8,7 +8,7 @@ const Player = forwardRef(function Player(props,ref){
   // const { video_details ,updateVdoDetails,playlist_state,setLoading} = usePlayerContext();
   const { video_details ,updateVdoDetails,playlist_state,setLoading,loading} = usePlayerContext();
 
-  console.log(video_details,"video_details");
+
 const vdoRef = useRef(null)
 const [isAutoPlay, setIsAutoPlay] = useState(false)
 
