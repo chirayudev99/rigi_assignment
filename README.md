@@ -20,7 +20,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 And here's the deployed version: https://rigi-assignment-player.vercel.app
 
-## Feature the app provides
+## Features the app provides
  -Implement a video player with essential functionalities:
  -Play/Pause toggle.
  -Seek functionality.
@@ -34,6 +34,7 @@ And here's the deployed version: https://rigi-assignment-player.vercel.app
 
  -Reorder Playlist
  -Clicking on a video in the playlist should load and play that video in the video player.
+ -autoplay next video when current video ends
 
  ## File System
   
