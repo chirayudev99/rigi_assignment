@@ -105,6 +105,10 @@ const Wrapper = styled.section`
     min-width: 200px;
   }
 
+  .image img{
+ object-fit:cover;
+  }
+
   .overlay {
     position: absolute;
     bottom: 0;

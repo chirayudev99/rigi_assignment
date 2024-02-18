@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { usePlayerContext } from "@/app/store";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/lazy";
 
 const Player = forwardRef(function Player(props,ref){
 
@@ -47,6 +47,7 @@ function onEnded() {
         ref={vdoRef} 
         onReady={onReady}
         fallback={<h1> Loading...</h1>}
+        
         playing={isAutoPlay}
         onEnded={onEnded}
         muted      
