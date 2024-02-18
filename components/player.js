@@ -13,7 +13,7 @@ const vdoRef = useRef(null)
 const [isAutoPlay, setIsAutoPlay] = useState(false)
 
 const onReady = useCallback(() => {
-  props.playerReady()
+ 
   setLoading(false)
   if(!isAutoPlay){
     vdoRef.current.seekTo(parseFloat(video_details.seek), 'seconds');
@@ -47,7 +47,7 @@ function onEnded(params) {
       {...props}
         ref={vdoRef} 
         onReady={onReady}
-        fallback={<h1> {loading && "Loading..."}</h1>}
+        fallback={<h1> Loading...</h1>}
         playing={isAutoPlay}
         onEnded={onEnded}
         muted      

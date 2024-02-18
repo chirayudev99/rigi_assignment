@@ -58,7 +58,7 @@ const updateIds = (list) => {
     <Draggable key={playlist_state} onPosChange={handlePosChange} >
     {playlist_state?.map((v,idx) => {
         return <div onClick={ () => {
-           setLoading(false)
+        
           updateTime(video_details.id - 1,getTime())
         console.log(playVideo,"playVideo")
      
