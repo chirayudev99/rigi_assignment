@@ -5,15 +5,14 @@ import { usePlayerContext } from "@/app/store";
 import ReactPlayer from "react-player";
 
 const Player = forwardRef(function Player(props,ref){
-  // const { video_details ,updateVdoDetails,playlist_state,setLoading} = usePlayerContext();
-  const { video_details ,updateVdoDetails,playlist_state,setLoading,loading} = usePlayerContext();
 
+  const { video_details ,updateVdoDetails,playlist_state} = usePlayerContext();
+const [loading, setLoading] = useState(true)
 
 const vdoRef = useRef(null)
 const [isAutoPlay, setIsAutoPlay] = useState(false)
 
 const onReady = useCallback(() => {
- 
   setLoading(false)
   if(!isAutoPlay){
     vdoRef.current.seekTo(parseFloat(video_details.seek), 'seconds');
@@ -31,7 +30,7 @@ useImperativeHandle(ref, () => {
 }, []);
 
 
-function onEnded(params) {
+function onEnded() {
   console.log("ended");
   updateVdoDetails(playlist_state[video_details.id])
   window.location.reload()
@@ -57,10 +56,10 @@ function onEnded(params) {
         url={video_details?.sources?.[0]}
       />
 
-      <div className="details">
+    {loading ? "Loading..." : <div className="details">
         <h2>{video_details?.title}</h2>
         <p>{video_details?.description}</p>
-      </div>
+      </div>}
     </Wrapper>
   );
 })

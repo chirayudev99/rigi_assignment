@@ -181,8 +181,6 @@ const initialState = {
       title: "What care can you get for a grand?",
     },
   ],
-  playVideo:false,
-  loading:true,
 };
 
 const PlayerContext = createContext(null);
@@ -204,12 +202,7 @@ function PlayerReducer(state, action) {
   if (action.type === "UPDATE_PLAYLIST_STATE") {
     return { ...state, playlist_state: action.payload };
   }
-  if (action.type === "PLAY_VIDEO") {
-    return { ...state, playVideo: action.payload };
-  }
-  if (action.type === "LOADING") {
-    return { ...state, loading: action.payload };
-  }
+
   if (action.type === "UPDATE_TIME") { 
     const { id, value } = action.payload;
     const updatedPlaylist = state.playlist_state.map((item, i) => {
@@ -250,12 +243,7 @@ function PlayerContextProvider({ children }) {
     updateTime(id,value) {
       dispatch({ type: "UPDATE_TIME",payload:{id,value} });
     },
-    setPlayVideo(value) {
-      dispatch({ type: "PLAY_VIDEO",payload:value});
-    },
-    setLoading(value) {
-      dispatch({ type: "LOADING",payload:value});
-    },
+
   };
 
   return <PlayerContext.Provider value={ctx} > 
